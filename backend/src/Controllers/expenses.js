@@ -21,11 +21,12 @@ exports.getExpenses =  async (req, res) => {
       // getting latest price by sorting in descending order of timestamp
       const latestPrice = await Price.findOne().sort({ timestamp: -1 });
   
-      res.json({ totalExpenses, ethPrice: latestPrice.priceInINR });
+     if(totalExpenses && latestPrice) res.json({ totalExpenses, ethPrice: latestPrice.priceInINR });
+     else res.send("currently there are no expenses");
 
     } catch (error) {
       res.status(500).send('Error calculating expenses');
-      console.error('Error :', error);
+      console.log('Error :', error);
     }
 };
   

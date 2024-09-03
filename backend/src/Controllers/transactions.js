@@ -2,7 +2,6 @@ const Transaction = require('../Models/transactions.js');
 const axios = require('axios');
 
 const key = process.env.ETHERSCAN_API_KEY;
-const Address = process.env.address;
 
 exports.getTransactionHistory =  async (req, res) => {
     const { address } = req.params;
@@ -10,9 +9,17 @@ exports.getTransactionHistory =  async (req, res) => {
     try {
         //fetch transactions performed on given address
       const response = await axios.get(
-        `https://api.etherscan.io/api?module=account&action=txlist&address=${Address}&startblock=0&endblock=99999999&page=1&offset=10&sort=asc&apikey=${key}`
-    );
+        `https://api.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&page=1&offset=10&sort=asc&apikey=${key}`
+      );
   
+    console.log(response.data);
+
+        // Check for API errors
+        if (response.data.status !== '1') {
+            console.log('Etherscan API error:', response.data.message);
+            return res.status(500).send('Currently no transactions');
+        }
+
       const transactions = response.data.result;
   
       // Check for existing transactions and update if needed

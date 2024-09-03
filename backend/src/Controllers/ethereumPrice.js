@@ -13,9 +13,8 @@ const fetchEthPrice = async () => {
   
       console.log(`Stored ETH price: ₹${priceInINR}`);
     } catch (error) {
-      console.error('Error fetching Ethereum price', error);
+      console.log('Error fetching Ethereum price', error);
     }
   };
   
-  // Fetch every 10 minutes
-  setInterval(fetchEthPrice, 600000);
+module.exports = fetchEthPrice;
