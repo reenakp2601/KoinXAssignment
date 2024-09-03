@@ -39,6 +39,7 @@ exports.getTransactionHistory =  async (req, res) => {
       await userTransactions.save();
   
       res.json(transactions);
+      
     } catch (error) {
       console.error('Error :', error);
       res.status(500).send('Error fetching transactions');
