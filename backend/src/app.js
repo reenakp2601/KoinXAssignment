@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const transactionsController = require('./Controllers/transactions');
+const expensesController = require('./Controllers/expenses.js')
 require('dotenv').config();
 
 const app = express();
@@ -14,5 +15,6 @@ mongoose.connect(process.env.MONGODB_URL)
 
 // Routes
 app.get('/transactions/:address', transactionsController.getTransactionHistory);
+app.get('/expenses/:address', expensesController.getExpenses);
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
