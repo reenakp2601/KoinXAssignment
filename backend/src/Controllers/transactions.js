@@ -8,6 +8,7 @@ exports.getTransactionHistory =  async (req, res) => {
     const { address } = req.params;
 
     try {
+        //fetch transactions performed on given address
       const response = await axios.get(
         `https://api.etherscan.io/api?module=account&action=txlist&address=${Address}&startblock=0&endblock=99999999&page=1&offset=10&sort=asc&apikey=${key}`
     );
@@ -24,13 +25,17 @@ exports.getTransactionHistory =  async (req, res) => {
       );
 
       if (newTransactions.length > 0) {
+
         existingTransactions.transactions.push(...newTransactions);
         await existingTransactions.save();
         console.log(`Updated transactions for address ${address}.`);
         return res.json(existingTransactions.transactions); // Send updated data
+
       } else {
+
         console.log(`No new transactions found for address ${address}.`);
         return res.json(existingTransactions.transactions); // Send existing data
+
       }
     }
 
@@ -39,7 +44,7 @@ exports.getTransactionHistory =  async (req, res) => {
       await userTransactions.save();
   
       res.json(transactions);
-      
+
     } catch (error) {
       console.error('Error :', error);
       res.status(500).send('Error fetching transactions');
