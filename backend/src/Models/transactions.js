@@ -5,5 +5,4 @@ const transactionSchema = new mongoose.Schema({
     transactions: Array,
 });
   
-
 module.exports = mongoose.model('Transaction', transactionSchema);
