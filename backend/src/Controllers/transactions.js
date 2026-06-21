@@ -1,6 +1,6 @@
 const Transaction = require('../Models/transactions.js');
 const axios = require('axios');
-
+require('dotenv').config();
 const key = process.env.ETHERSCAN_API_KEY;
 
 exports.getTransactionHistory =  async (req, res) => {
@@ -9,7 +9,7 @@ exports.getTransactionHistory =  async (req, res) => {
     try {
         //fetch transactions performed on given address
       const response = await axios.get(
-        `https://api.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&page=1&offset=10&sort=asc&apikey=${key}`
+        `https://api.etherscan.io/v2/api?address=${address}&sort=asc&offset=10&page=1&endblock=99999999&startblock=0&action=txlist&module=account&chainid=1&apikey=${key}`
       );
   
     console.log(response.data);
